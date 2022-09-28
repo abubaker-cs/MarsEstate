@@ -20,11 +20,9 @@ package com.example.android.marsrealestate.overview
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.android.marsrealestate.network.MarsApi
-import com.example.android.marsrealestate.network.MarsProperty
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
@@ -45,36 +43,38 @@ class OverviewViewModel : ViewModel() {
         getMarsRealEstateProperties()
     }
 
+
     /**
-     * Sets the value of the status LiveData to the Mars API status.
+     * Sets the value of the response LiveData to the Mars API status or the successful number of
+     * Mars properties retrieved.
      */
-    // TODO 08 - Callback<List<MarsProperty>> instead of Callback<String>
     private fun getMarsRealEstateProperties() {
-        // TODO 02 Call the MarsApi to enqueue the Retrofit request, implementing the callbacks
-        MarsApi.retrofitService.getProperties().enqueue(object : Callback<List<MarsProperty>> {
-            /**
-             * Invoked for a received HTTP response.
-             *
-             *
-             * Note: An HTTP response may still indicate an application-level failure such as a 404 or 500.
-             * Call [Response.isSuccessful] to determine if the response indicates success.
-             */
-            override fun onResponse(
-                call: Call<List<MarsProperty>>,
-                response: Response<List<MarsProperty>>
-            ) {
-                _response.value = "Success: ${response.body()?.size} Mars properties retrieved"
-                // _response.value = response.body()
+        viewModelScope.launch {
+            try {
+                var listResult = MarsApi.retrofitService.getProperties()
+                _response.value = "Success: ${listResult.size} Mars properties retrieved"
+            } catch (e: Exception) {
+                _response.value = "Failure: ${e.message}"
             }
-
-            /**
-             * Invoked when a network exception occurred talking to the server or when an unexpected exception
-             * occurred creating the request or processing the response.
-             */
-            override fun onFailure(call: Call<List<MarsProperty>>, t: Throwable) {
-                _response.value = "Failure: " + t.message
-            }
-
-        })
+        }
     }
+    // TO DO 08 - Callback<List<MarsProperty>> instead of Callback<String>
+//    private fun getMarsRealEstateProperties() {
+//        // TO DO 02 Call the MarsApi to enqueue the Retrofit request, implementing the callbacks
+//        MarsApi.retrofitService.getProperties().enqueue(object : Callback<List<MarsProperty>> {
+//            // Invoked for a received HTTP response.
+//            override fun onResponse(
+//                call: Call<List<MarsProperty>>,
+//                response: Response<List<MarsProperty>>
+//            ) {
+//                _response.value = "Success: ${response.body()?.size} Mars properties retrieved"
+//            }
+//
+//            // 404
+//            override fun onFailure(call: Call<List<MarsProperty>>, t: Throwable) {
+//                _response.value = "Failure: " + t.message
+//            }
+//
+//        })
+//    }
 }

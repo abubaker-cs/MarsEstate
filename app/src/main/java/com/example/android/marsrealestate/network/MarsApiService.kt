@@ -29,7 +29,6 @@ package com.example.android.marsrealestate.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -38,12 +37,23 @@ import retrofit2.http.GET
 private const val BASE_URL = "https://mars.udacity.com/"
 
 // TODO 05 - Moshi Builder to create a Moshi object with the KotlinJsonAdapterFactory
+
+
+/**
+ * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
+ * full Kotlin compatibility.
+ */
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
 
 // I am using Retrofit Builder with ScalarsConverterFactory and the Base URL
 // TODO 06 - Use MoshiConverterFactory.create(moshi) instead of ScalarsConverterFactory.create()
+
+/**
+ * Use the Retrofit builder to build a retrofit object using a Moshi converter with our Moshi
+ * object.
+ */
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
@@ -52,16 +62,25 @@ private val retrofit = Retrofit.Builder()
 // Interface = We will define an interface that explains how retrofit talks to our web server using HTTP requests.
 // I am implementing the MarsAPIService interface with @GET getProperties returning a String
 // TODO 07 - Use Call<List<MarsProperty>> instead of Call<String>
+
+/**
+ * Returns a Coroutine [List] of [MarsProperty] which can be fetched with await() if in a Coroutine scope.
+ * The @GET annotation indicates that the "realestate" endpoint will be requested with the GET
+ * HTTP method
+ */
 interface MarsApiService {
 
     @GET("realestate")
-    fun getProperties():
-            Call<List<MarsProperty>>
+    suspend fun getProperties(): List<MarsProperty>
 
 }
 
 // We are exposing our retrofit service to the rest of the application using a public object called MarsAPI
 // Creating the MarsAPI object using Retrofit to implement the MarsAPIService
+
+/**
+ * A public Api object that exposes the lazy-initialized Retrofit service
+ */
 object MarsApi {
     val retrofitService: MarsApiService by lazy {
         retrofit.create(MarsApiService::class.java)
