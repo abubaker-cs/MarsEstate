@@ -17,9 +17,9 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: "androidx.navigation.safeargs"
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 33
@@ -44,6 +44,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    // Enables data binding.
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
@@ -55,7 +61,7 @@ dependencies {
 
     // Kotlin
     // implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
+    // implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
 
     // Constraint Layout
     implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
