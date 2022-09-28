@@ -17,3 +17,39 @@
 
 package com.example.android.marsrealestate
 
+import android.widget.ImageView
+import androidx.core.net.toUri
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+
+// TODO 12 - This file will be used to bind functions() through the XML file. e.g:
+// app:imageUrl="@{viewModel.property.imgSrcUrl}"
+
+// Binding Adapter, converting the imgUrl to a URI with the Https scheme
+@BindingAdapter("imageUrl")
+fun bindImage(imgView: ImageView, imgUrl: String?) {
+    imgUrl?.let {
+
+        // Source
+        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+
+        // Load
+        Glide.with(imgView.context)
+            .load(imgUri)
+
+            // Loading and Fallback images
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image)
+            )
+            .into(imgView)
+    }
+}
+
+// Glide to load the imgUri into the imgView
+
+
+// requestOptions for the placeholder and error into the Glide call
+
