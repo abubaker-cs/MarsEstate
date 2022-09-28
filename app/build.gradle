@@ -77,17 +77,18 @@ dependencies {
     // Core with Ktx
     implementation "androidx.core:core-ktx:$version_core"
 
-    // Moshi -
-    implementation "com.squareup.moshi:moshi:$version_moshi"
-    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
-
-
-    // Retrofit - Deprecated plugins - No more required
+    // Retrofit  - A type-safe HTTP client for Android and Java
     implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
     implementation "com.squareup.retrofit2:converter-scalars:$version_retrofit"
 
     // Retrofit with Moshi Converter
+    // A Converter which uses Moshi for serialization to and from JSON
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
+
+    // Moshi - JSON > Kotlin Objects
+    implementation "com.squareup.moshi:moshi:$version_moshi"
+    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+
 
     // Coroutines - Deprecated - No more required
     // implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_kotlin_coroutines"

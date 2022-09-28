@@ -27,27 +27,36 @@ package com.example.android.marsrealestate.network
  * 2. Convertor factory that allows Retrofit to return the server response in a useful format
  */
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Call
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
 // Base URL
 private const val BASE_URL = "https://mars.udacity.com/"
 
+// TODO 05 - Moshi Builder to create a Moshi object with the KotlinJsonAdapterFactory
+private val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
+
 // I am using Retrofit Builder with ScalarsConverterFactory and the Base URL
+// TODO 06 - Use MoshiConverterFactory.create(moshi) instead of ScalarsConverterFactory.create()
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(ScalarsConverterFactory.create())
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
     .build()
 
 // Interface = We will define an interface that explains how retrofit talks to our web server using HTTP requests.
 // I am implementing the MarsAPIService interface with @GET getProperties returning a String
+// TODO 07 - Use Call<List<MarsProperty>> instead of Call<String>
 interface MarsApiService {
 
     @GET("realestate")
     fun getProperties():
-            Call<String>
+            Call<List<MarsProperty>>
 
 }
 
