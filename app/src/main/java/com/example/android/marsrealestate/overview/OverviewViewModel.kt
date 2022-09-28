@@ -49,14 +49,17 @@ class OverviewViewModel : ViewModel() {
      * Mars properties retrieved.
      */
     private fun getMarsRealEstateProperties() {
+
+        // Coroutine
         viewModelScope.launch {
             try {
-                var listResult = MarsApi.retrofitService.getProperties()
+                val listResult = MarsApi.retrofitService.getProperties()
                 _response.value = "Success: ${listResult.size} Mars properties retrieved"
             } catch (e: Exception) {
                 _response.value = "Failure: ${e.message}"
             }
         }
+
     }
     // TO DO 08 - Callback<List<MarsProperty>> instead of Callback<String>
 //    private fun getMarsRealEstateProperties() {
