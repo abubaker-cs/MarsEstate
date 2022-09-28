@@ -18,7 +18,7 @@
 package com.example.android.marsrealestate.network
 
 /**
- * 01 Network Layer:
+ * TODO 01 Network Layer:
  * The API that the ViewModel uses to communicate with the web service.
  *
  * Retrofit Basics:
@@ -51,6 +51,7 @@ interface MarsApiService {
 
 }
 
+// We are exposing our retrofit service to the rest of the application using a public object called MarsAPI
 // Creating the MarsAPI object using Retrofit to implement the MarsAPIService
 object MarsApi {
     val retrofitService: MarsApiService by lazy {
