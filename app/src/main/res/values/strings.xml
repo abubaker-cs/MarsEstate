@@ -26,4 +26,5 @@
     <string name="display_price_monthly_rental">$%,.0f/month</string>
     <string name="display_price">$%,.0f</string>
     <string name="item_img_desc">Thumbnail</string>
+    <string name="loading_data_desc">Loading data</string>
 </resources>
