@@ -96,4 +96,22 @@ class OverviewViewModel : ViewModel() {
 //
 //        })
 //    }
+
+    /**
+     * An encapsulated LiveData variable for navigating to the selectedProperty detail screen
+     */
+    private val _navigateToSelectedProperty = MutableLiveData<MarsProperty>()
+
+    val navigateToSelectedProperty: LiveData<MarsProperty>
+        get() = _navigateToSelectedProperty
+
+    fun displayPropertyDetails(marsProperty: MarsProperty) {
+        _navigateToSelectedProperty.value = marsProperty
+    }
+
+    // Add displayPropertyDetailsComplete() to set _navigateToSelectedProperty to false once
+    // navigation is completed to prevent unwanted extra navigations
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedProperty.value = null
+    }
 }

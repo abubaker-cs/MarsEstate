@@ -18,9 +18,13 @@
 package com.example.android.marsrealestate.network
 
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parcelize
 
 // TODO 04 - DATA Class (Mapping to JSON Response)
 // Kotlin "data class" with properties that match the JSON response fields
+
+// Android Extensions - Dynamically updating Particles
+@Parcelize
 data class MarsProperty(
 
     val id: String,
@@ -34,3 +38,34 @@ data class MarsProperty(
     val price: Double
 
 )
+
+//    : Parcelable {
+//    constructor(parcel: Parcel) : this(
+//        parcel.readString(),
+//        parcel.readString(),
+//        parcel.readString(),
+//        parcel.readDouble()
+//    ) {
+//    }
+//
+//    override fun writeToParcel(parcel: Parcel, flags: Int) {
+//        parcel.writeString(id)
+//        parcel.writeString(imgSrcUrl)
+//        parcel.writeString(type)
+//        parcel.writeDouble(price)
+//    }
+//
+//    override fun describeContents(): Int {
+//        return 0
+//    }
+//
+//    companion object CREATOR : Parcelable.Creator<MarsProperty> {
+//        override fun createFromParcel(parcel: Parcel): MarsProperty {
+//            return MarsProperty(parcel)
+//        }
+//
+//        override fun newArray(size: Int): Array<MarsProperty?> {
+//            return arrayOfNulls(size)
+//        }
+//    }
+//}
