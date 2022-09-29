@@ -17,13 +17,16 @@
 
 package com.example.android.marsrealestate.network
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 // TODO 04 - DATA Class (Mapping to JSON Response)
 // Kotlin "data class" with properties that match the JSON response fields
 
 // Android Extensions - Dynamically updating Particles
+// When you annotate a class with @Parcelize, a Parcelable implementation is automatically generated
+// Ref: https://developer.android.com/kotlin/parcelize
 @Parcelize
 data class MarsProperty(
 
@@ -35,9 +38,12 @@ data class MarsProperty(
 
     val type: String,
 
-    val price: Double
+    val price: Double,
 
-)
+    ) : Parcelable {
+    val isRental
+        get() = type == "rent"
+}
 
 //    : Parcelable {
 //    constructor(parcel: Parcel) : this(

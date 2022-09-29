@@ -20,7 +20,9 @@ package com.example.android.marsrealestate.overview
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.android.marsrealestate.R
 import com.example.android.marsrealestate.databinding.FragmentOverviewBinding
 
@@ -60,6 +62,17 @@ class OverviewFragment : Fragment() {
             viewModel.displayPropertyDetails(it)
         })
 
+        /**
+         * Aan observer on navigateToSelectedProperty that calls navigate() to go to the
+         * detail screen when the MarsProperty is not null.
+         */
+        viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, Observer {
+            if (null != it) {
+                this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
+                viewModel.displayPropertyDetailsComplete()
+            }
+        })
+
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -71,4 +84,6 @@ class OverviewFragment : Fragment() {
         inflater.inflate(R.menu.overflow_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
+
+
 }
